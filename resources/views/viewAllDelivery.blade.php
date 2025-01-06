@@ -94,39 +94,40 @@
 </div>
 
  
-<div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-center" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Edit Sheet</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ url('updatDelivery') }}" class="needs-validation" novalidate method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="modal-body">
-                    <input type="number" class="form-control" name="id" id="id" hidden />
-                    <div class="row">
-                        <div class="mb-3">
-                            <label class="form-label" for="sheetName">Update delivery<span class="text-danger">*</span></label>
-                            <select class="form-control" name="check" id="check" required >
+<div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel1">Edit Sheet</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{{ url('updateOrder') }}" class="needs-validation" novalidate method="post" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                  <input type="number" class="form-control" name="id" id="id" hidden />
+                  <div class="row">
+                      <div class="mb-3">
+                          <label class="form-label" for="sheetName">
+                              Update delivery <span class="text-danger">*</span>
+                          </label>
+                          <select class="form-control" name="check" id="check" required>
                               <option value="">--Select Option--</option>
                               <option value="cancel">Cancel Order</option>
                               <option value="delivered">Delivered</option>
-                              <option value="on">on the way</option>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
+                              <option value="on">On the way</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                      Close
+                  </button>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+              </div>
+          </form>
+      </div>
+  </div>
 </div>
 
 
