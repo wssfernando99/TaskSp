@@ -24,7 +24,7 @@ class DeliveryController extends Controller
 
     public function CreateDelivery(Request $request){
 
-        try{
+        // try{
 
             $request->validate([
 
@@ -44,6 +44,8 @@ class DeliveryController extends Controller
                 'length' => 'required',
                 'width' => 'required',
                 'height' => 'required',
+                'pEmail' => 'email',
+                'dEmail' => 'email',
                 
             ],[
                 'pAddress.required' => 'Please enter your address',
@@ -62,6 +64,8 @@ class DeliveryController extends Controller
                 'length.required' => 'Please enter the length of the goods',
                 'width.required' => 'Please enter the width of the goods',
                 'height.required' => 'Please enter the height of the goods',
+                'pEmail.email' => 'Please enter a valid email address',
+                'dEmail.email' => 'Please enter a valid email address',
             ]);
     
             $deliveryId = uniqid();
@@ -99,21 +103,23 @@ class DeliveryController extends Controller
     
             return redirect('/viewAllDelivery')->with('message', 'Delivery created successfully');
 
-        }catch (Exception $e) {
+        // }catch (Exception $e) {
 
-            return redirect()->back()->with('error','Something went wrong');
+        //     return redirect()->back()->with('error','Something went wrong');
 
-        }
+        // }
         
     
     }
 
-    public function ViewOne($deliveryId){
+    public function ViewOneDelivery($deliveryId){
 
         // $delivery = Delivery::join('packages', 'deliveries.deliveryId', '=', 'packages.deliveryId')
         //     ->where('deliveries.deliveryId', $deliveryId)
         //     ->where('deliveries.isActive', 1)
         //     ->first();
+
+        dd($deliveryId);
 
         $delivery = Delivery::where('deliveryId', $deliveryId)
         ->where('isActive', 1)
@@ -122,11 +128,26 @@ class DeliveryController extends Controller
         return view('viewOneDelivery', compact('delivery'));
     }
 
-    public function CancelOrder($deliveryId){
+    public function UpdateOrder(Request $request){
 
-        Delivery::where(['deliveryId',$deliveryId])->update(['status' => 0]);
+        $check = $request->check;
+        $id = $request->id;
 
-        return redirect('/viewAllDelivery')->with('message', 'Order cancelled successfully');
+        if($check == 'cancel'){
+
+            Delivery::where(['id',$id])->update(['status' => 0]);
+
+        }elseif($check == 'delivered'){
+
+            Delivery::where(['id',$id])->update(['status' => 3]);
+
+        }elseif($check == 'on'){
+
+            Delivery::where(['id',$id])->update(['status' => 2]);
+        }
+        
+
+        return redirect('/viewAllDelivery')->with('message', 'Order updated successfully');
 
     }
 

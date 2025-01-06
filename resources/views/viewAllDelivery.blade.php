@@ -78,8 +78,8 @@
                       @endif
                     </td>
                     <td> 
-                      <a href="{{ url('/viewOne/'.$delivery->deliveryId) }}" class="btn btn-primary btn-sm">View details</a>
-                      <a href="{{ url('/cancelOrder/'.$delivery->deliveryId) }}" class="btn btn-danger btn-sm">Cancel Order</a>
+                      <a href="{{ url('/viewOne').$delivery->deliveryId }}" class="btn btn-primary btn-sm">View details</a>
+                      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#edit-modal" data-id="{{ $delivery->id }}">update</button>
                     </td>
                   </tr>
                     
@@ -92,3 +92,58 @@
         </div>
     </div>
 </div>
+
+ Edit Modal 
+<div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Edit Sheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ url('updatDelivery') }}" class="needs-validation" novalidate method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="number" class="form-control" name="id" id="id" hidden />
+                    <div class="row">
+                        <div class="mb-3">
+                            <label class="form-label" for="sheetName">Update delivery<span class="text-danger">*</span></label>
+                            <select class="form-control" name="check" id="check" required >
+                              <option value="">--Select Option--</option>
+                              <option value="cancel">Cancel Order</option>
+                              <option value="delivered">Delivered</option>
+                              <option value="on">on the way</option>
+                        </div>
+                    </div>
+
+                </div>
+                
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+
+<script>
+  $(document).ready(function() {
+
+  console.log('sds');
+      $('#edit-modal').on('show.bs.modal', function(event) {
+          let button = $(event.relatedTarget);
+          let id = button.data('id');
+
+
+          let modal = $(this);
+          modal.find('.modal-body #id').val(id);
+      });
+  });
+</script>
+
