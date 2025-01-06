@@ -93,7 +93,7 @@
     </div>
 </div>
 
- Edit Modal 
+ 
 <div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-center" role="document">
@@ -118,18 +118,18 @@
                     </div>
 
                 </div>
-                
+                <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                
+                </div>
             </form>
         </div>
     </div>
 </div>
 
-@endsection
+
 
 
 <script>
@@ -146,4 +146,6 @@
       });
   });
 </script>
+
+@endsection
 
