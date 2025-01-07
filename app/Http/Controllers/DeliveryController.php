@@ -11,7 +11,7 @@ class DeliveryController extends Controller
 {
     public function ViewDelivery(){
 
-        $deliveries = Delivery::all();
+        $deliveries = Delivery::where('isActive', 1)->paginate(2);
 
         return view('viewAllDelivery', compact('deliveries'));
 
@@ -20,6 +20,13 @@ class DeliveryController extends Controller
     public function CreateView(){
         
         return view('createView');
+    }
+
+    public function ViewOneDelivery($id){
+
+        $delivery = Delivery::where('id', $id)->first();
+
+        return view('viewOneDelivery',compact('delivery'));
     }
 
     public function CreateDelivery(Request $request){
@@ -44,8 +51,8 @@ class DeliveryController extends Controller
                 'length' => 'required',
                 'width' => 'required',
                 'height' => 'required',
-                'pEmail' => 'email',
-                'dEmail' => 'email',
+                'pEmail' => 'nullable | email',
+                'dEmail' => 'nullable | email',
                 
             ],[
                 'pAddress.required' => 'Please enter your address',
@@ -112,43 +119,45 @@ class DeliveryController extends Controller
     
     }
 
-    public function ViewOneDelivery($deliveryId){
+    public function UpdateOrder(Request $request)
+    {
+        // dd($request->check, $request->id);
 
-        // $delivery = Delivery::join('packages', 'deliveries.deliveryId', '=', 'packages.deliveryId')
-        //     ->where('deliveries.deliveryId', $deliveryId)
-        //     ->where('deliveries.isActive', 1)
-        //     ->first();
-
-        dd($deliveryId);
-
-        $delivery = Delivery::where('deliveryId', $deliveryId)
-        ->where('isActive', 1)
-        ->first();
-
-        return view('viewOneDelivery', compact('delivery'));
-    }
-
-    public function UpdateOrder(Request $request){
-
+        $request->validate([
+            'check' => 'required',
+            'id' => 'required',
+        ],[
+            'check.required' => 'Please select an option',
+            'id.required' => 'Please select an order',
+        ]);
+    
         $check = $request->check;
         $id = $request->id;
-
-        if($check == 'cancel'){
-
-            Delivery::where(['id',$id])->update(['status' => 0]);
-
-        }elseif($check == 'delivered'){
-
-            Delivery::where(['id',$id])->update(['status' => 3]);
-
-        }elseif($check == 'on'){
-
-            Delivery::where(['id',$id])->update(['status' => 2]);
+    
+        if ($check == 'cancel') {
+            Delivery::where('id', $id)->update(['status' => 0]);
+        } elseif ($check == 'delivered') {
+            Delivery::where('id', $id)->update(['status' => 3]);
+        } elseif ($check == 'on') {
+            Delivery::where('id', $id)->update(['status' => 2]);
         }
-        
-
+    
         return redirect('/viewAllDelivery')->with('message', 'Order updated successfully');
+    }
+
+    public function Delete(Request $request){
+
+        
+        Delivery::where('id', $request->id)->update([
+            'isActive' => 0
+        ]);
+
+        return redirect('/viewAllDelivery')->with('message', 'Order deleted successfully');
 
     }
 
 }
+
+    
+
+

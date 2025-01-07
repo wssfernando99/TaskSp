@@ -10,8 +10,10 @@ Route::get('/', function () {
 Route::get('/createView', [DeliveryController::class, 'CreateView']);
 Route::get('/viewAllDelivery', [DeliveryController::class, 'ViewDelivery']);
 
-Route::get('/viewOne{$deliveryId}', [DeliveryController::class, 'ViewOneDelivery']);
+Route::get('/viewDelivery{$id}', [DeliveryController::class, 'ViewOneDelivery']);
 
 Route::post('/createDelivery', [DeliveryController::class, 'CreateDelivery']);
 
 Route::post('/updateOrder', [DeliveryController::class, 'UpdateOrder']);
+
+Route::post('/delete', [DeliveryController::class, 'Delete']);
