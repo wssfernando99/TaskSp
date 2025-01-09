@@ -11,7 +11,9 @@ class DeliveryController extends Controller
 {
     public function ViewDelivery(){
 
-        $deliveries = Delivery::where('isActive', 1)->paginate(2);
+        $deliveries = Delivery::join('packages', 'deliveries.deliveryId', '=', 'packages.deliveryId')
+            ->where('deliveries.isActive', 1)
+            ->paginate(10);
 
         return view('viewAllDelivery', compact('deliveries'));
 
@@ -22,7 +24,9 @@ class DeliveryController extends Controller
         return view('createView');
     }
 
-    public function ViewOneDelivery($id){
+    public function ViewOneDelivery(){
+
+        $id = '2';
 
         $delivery = Delivery::where('id', $id)->first();
 
@@ -37,9 +41,9 @@ class DeliveryController extends Controller
 
                 'pAddress' => 'required',
                 'pName' => 'required',
-                'pPhone' => 'required',
+                'pPhone' => 'required | min:10 |max:10',
                 'dName' => 'required',
-                'dPhone' => 'required',
+                'dPhone' => 'required | min:10 |max:10',
                 'dAddress' => 'required',
                 'tOfGood' => 'required',
                 'dProvider' => 'required',
@@ -58,12 +62,16 @@ class DeliveryController extends Controller
                 'pAddress.required' => 'Please enter your address',
                 'pName.required' => 'Please enter your name',
                 'pPhone.required' => 'Please enter your phone number',
+                'pPhone.min' => 'Please enter a valid phone number',
+                'pPhone.max' => 'Please enter a valid phone number',
                 'dName.required' => 'Please enter the name of the recipient',
                 'dPhone.required' => 'Please enter the phone number of the recipient',
+                'dPhone.min' => 'Please enter a valid phone number',
+                'dPhone.max' => 'Please enter a valid phone number',
                 'dAddress.required' => 'Please enter the address of the recipient',
-                'tOfGood.required' => 'Please enter the type of goods',
-                'dProvider.required' => 'Please enter the delivery provider',
-                'priority.required' => 'Please enter the priority',
+                'tOfGood.required' => 'Please select the type of goods',
+                'dProvider.required' => 'Please select the delivery provider',
+                'priority.required' => 'Please select the priority',
                 'sPickDate.required' => 'Please enter the pickup date',
                 'sPickTime.required' => 'Please enter the pickup time',
                 'pDescription.required' => 'Please enter the description of the goods',
