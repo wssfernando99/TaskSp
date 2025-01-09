@@ -4,7 +4,11 @@
 <div class="container-fluid p-5">
 
 <div class="row">
+
+    <div class="col-md-12 mb-3"><h4>Create a Delivery Record</h4></div>
     <div class="col-md-12">
+
+
 
         <form action="{{ url('/createDelivery') }}" class="needs-validation" novalidate method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
@@ -119,35 +123,36 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="">Package description<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Sheet Name" name="pDescription" id="pDescription"/>
+                        {{-- <input type="text" class="form-control"  name="pDescription" id="pDescription"/> --}}
+                        <textarea class="form-control" name="pDescription" id="pDescription" rows="1"></textarea>
                         @error('pDescription')
                                 <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="">Length<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Sheet Name" name="length" id="length"/>
+                        <input type="text" class="form-control"  name="length" id="length"/>
                         @error('length')
                                 <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="">height<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Sheet Name" name="height" id="height"/>
+                        <input type="text" class="form-control"  name="height" id="height"/>
                         @error('height')
                                 <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="">Width<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Sheet Name" name="width" id="width"/>
+                        <input type="text" class="form-control"  name="width" id="width"/>
                         @error('width')
                                 <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label" for="">weight<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" placeholder="Enter Sheet Name" name="weight" id="weight"/>
+                        <input type="text" class="form-control"  name="weight" id="weight"/>
                         @error('weight')
                                 <span class="text-danger">{{ $message }}</span>
                         @enderror
